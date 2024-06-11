@@ -1,67 +1,75 @@
-import { Button, Container, Typography, styled } from '@mui/material'; //importar o style e instalar o material ui
+import { Box, Container, Typography, styled } from '@mui/material'; //importar o style e instalar o material ui
 import Avatar from '../../../../assets/images/avatar.jpeg'; // Para importar uma imagem
 import Grid from '@mui/material/Grid';
 import DownloadIcon from '@mui/icons-material/Download';
 import MailOutlineIcon from '@mui/icons-material/MailOutline';
+import StyledButton from '../../../../components/StyledButton/StyledButton';
+import { AnimatedBackground } from '../../../../components/AnimatedBackground/AnimatedBackground';
 
 const Hero = () => {
-  //executar o style, sempre que for estilizar um componente é necessario inserir esse codigo
-  const StyledHero = styled('div')(() => ({
-    backgroundColor: 'black',
-    height: '100vh',
-  }));
 
-  const StyledImg = styled('img')(() => ({
-    width: '100%',
-    borderRadius: '50%',
-  }));
+    const StyledHero = styled("div")(({ theme }) => ({
+        backgroundColor: theme.palette.primary.main,
+        height: "100vh",
+        display: "flex",
+        alignItems: "center",
+        [theme.breakpoints.up('xs')]: { // <= mobile
+            paddingTop: "100px",
 
-  return (
-    <>
-      <StyledHero>
-        <Container maxWidth="lg">
-          <Grid container spacing={2}>
-            <Grid item xs={12} md={4}>
-              <StyledImg src={Avatar} />
-            </Grid>
-            <Grid item xs={12} md={8}>
-              <Typography color="primary" variant="h1" textAlign="center">
-                Thayane Oliveira
-              </Typography>
-              <Typography color="secondary" variant="h2" textAlign="center">
-                I'm a front-end developer
-              </Typography>
-              <Grid container display="flex" justifyContent="center">
-                <Grid
-                  item
-                  xs={12}
-                  md={4}
-                  display="flex"
-                  justifyContent="center"
-                >
-                  <Button>
-                    <DownloadIcon />
-                    Download CV
-                  </Button>
-                </Grid>
-                <Grid
-                  item
-                  xs={12}
-                  md={4}
-                  display="flex"
-                  justifyContent="center"
-                >
-                  <Button>
-                    <MailOutlineIcon /> Contact me
-                  </Button>
-                </Grid>
-              </Grid>
-            </Grid>
-          </Grid>
-        </Container>
-      </StyledHero>
-    </>
-  );
-};
+        },
+        [theme.breakpoints.up('md')]: { // >=mobile
+            paddingTop: "0",
+        }
+    }))
 
-export default Hero;
+    const StyledImg = styled("img")(({ theme }) => ({
+        width: "75%",
+        borderRadius: "50%",
+        border: `1px solid ${theme.palette.primary.contrastText}`
+    }))
+
+    return (
+        <>
+            <StyledHero>
+                <Container maxWidth="lg">
+                    <Grid container spacing={2}>
+                        <Grid item xs={12} md={5}>
+                            <Box position="relative">
+                                <Box position="absolute" width={"150%"} top={-100} right={0}>
+                                    <AnimatedBackground />
+                                </Box>
+                                <Box position="relative" textAlign="center">
+                                    <StyledImg src={Avatar} />
+                                </Box>
+                            </Box>
+                        </Grid>
+                        <Grid item xs={12} md={7}>
+                            <Typography color="primary.contrastText" variant="h1" textAlign="center" pb={2}>Thayane Sousa</Typography>
+                            <Typography color="primary.contrastText" variant="h3" textAlign="center" >I'm a front-end developer</Typography>
+                            <Grid container display="flex" justifyContent="center" spacing={3} pt={3}>
+                                <Grid item xs={12} md={4} display="flex" justifyContent="center">
+                                    <StyledButton>
+                                        <DownloadIcon />
+                                        <Typography>
+                                            Download CV
+                                        </Typography>
+                                    </StyledButton>
+                                </Grid>
+                                <Grid item xs={12} md={4} display="flex" justifyContent="center">
+                                    <StyledButton>
+                                        <MailOutlineIcon />
+                                        <Typography>
+                                            Contact me
+                                        </Typography>
+                                    </StyledButton>
+                                </Grid>
+                            </Grid>
+                        </Grid>
+                    </Grid>
+                </Container>
+            </StyledHero>
+        </>
+    )
+}
+
+export default Hero
